@@ -348,11 +348,11 @@
               case "7": //Finance 
                 echo "HELLO FINANCE DEPARTMENT !";
                 $de = "finance";
-                $sql = "SELECT * FROM clearance WHERE registrar = '$clr' AND finance = '$pen'";
+                $sql = "SELECT * FROM clearance WHERE  finance = '$pen'";
                 $result = mysqli_query($con, $sql);
                 ?>
                 <tr>
-                  <th scope="col">REG No. </th>
+                  <th scope="col">REG NU. </th>
                   <th scope="col">REGISTRAR</th>
                   <th scope="col">CLEAR</th>
                   <th scope="col">NOT CLEARED</th>
