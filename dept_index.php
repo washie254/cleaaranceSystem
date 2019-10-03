@@ -203,7 +203,7 @@
               case "2": //librarian
                   echo "HELLO MSEE WA BOOKS!";
                   $de = "librarian";
-                  $sql = "SELECT * FROM clearance WHERE cod = '$clr' AND librarian = '$pen'";
+                  $sql = "SELECT * FROM clearance WHERE librarian = '$pen'";
                   $result = mysqli_query($con, $sql);
               ?>
                   <tr>
@@ -233,7 +233,7 @@
               case "3":
                   echo "HELLO HOUSEKEEPER!";
                   $de = "housekeeper";
-                  $sql = "SELECT * FROM clearance WHERE cod = '$clr' AND librarian = '$clr' AND housekeeper = '$pen'";
+                  $sql = "SELECT * FROM clearance WHERE housekeeper = '$pen'";
                   $result = mysqli_query($con, $sql);
               ?>
                   <tr>
@@ -264,7 +264,7 @@
               case "4": //Dean of Students
                 echo "HELLO DEAN!";
                 $de = "dean_of_students";
-                $sql = "SELECT * FROM clearance WHERE housekeeper = '$clr' AND dean_of_students='$pen'";
+                $sql = "SELECT * FROM clearance WHERE  dean_of_students='$pen'";
                 $result = mysqli_query($con, $sql);
                 ?>
                 <tr>
@@ -292,7 +292,7 @@
               case "5": 
                 echo "HELLO SPORTS OFFICER !";
                 $de = "sports_officer";
-                $sql = "SELECT * FROM clearance WHERE dean_of_students = '$clr' AND sports_officer='$pen'";
+                $sql = "SELECT * FROM clearance WHERE sports_officer='$pen'";
                 $result = mysqli_query($con, $sql);
                 ?>
                 <tr>
@@ -320,7 +320,7 @@
             case "6": //libratianM
               echo "HELLO REGISTRAR !";
               $de = "registrar";
-              $sql = "SELECT * FROM clearance WHERE sports_officer = '$clr' AND registrar='$pen' ";
+              $sql = "SELECT * FROM clearance WHERE registrar='$pen' ";
               $result = mysqli_query($con, $sql);
               ?>
               <tr>
