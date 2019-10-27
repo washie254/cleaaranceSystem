@@ -11,7 +11,7 @@
 	
 
 	// connect to database
-	$db = mysqli_connect('localhost', 'root', '', 'clearance_system');
+	$db = mysqli_connect('localhost', 'root', '', 'dkut_clearance_system');
 
 	// REGISTER USER
 	if (isset($_POST['reg_user'])) {

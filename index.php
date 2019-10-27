@@ -1,4 +1,5 @@
 <?php 
+  include('server.php');
 	session_start(); 
 
 	if (!isset($_SESSION['username'])) {
@@ -120,24 +121,12 @@
           <tr>
             <th scope="row"><?php echo $_SESSION['username'];?></th>
             <?php
-              $db = "clearance_system";  //masked for security
-              $host = "localhost"; //masked for security
-              $user = "root";//masked for security
-              $pwd = ""; //masked for security
-              $con = mysqli_connect($host,$user,$pwd,$db);
 
-              if (!$con) {
-                die('Could not connect: ' . mysqli_error($con));
-              }
               $user =$_SESSION['username'];
               echo $user;
 				      $sql = "SELECT * FROM clearance WHERE student_reg = '$user'";
-              $result = mysqli_query($con, $sql);
-            //   if (!$check1_res) {
-            //     printf("Error: %s\n", mysqli_error($con));
-            //     exit();
-            // }
-
+              $result = mysqli_query($db, $sql);
+              
               while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
                 echo '<td>'.$row[2].'</td>';
                 echo '<td>'.$row[3].'</td>';
@@ -175,19 +164,11 @@
           <!-- [ LOOP THE CLEARANCE STATUS OF THE STUDENTS ] -->
           <tr>
             <?php
-              $db = "clearance_system";  //masked for security
-              $host = "localhost"; //masked for security
-              $user = "root";//masked for security
-              $pwd = ""; //masked for security
-              $con = mysqli_connect($host,$user,$pwd,$db);
-
-              if (!$con) {
-                die('Could not connect: ' . mysqli_error($con));
-              }
+           
               $user =$_SESSION['username'];
               // echo $user;
 				      $sql = "SELECT * FROM issues WHERE std_reg = '$user' ";
-              $result = mysqli_query($con, $sql);
+              $result = mysqli_query($db, $sql);
 
               while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
                 echo '<td>'.$row[1].'</td>';

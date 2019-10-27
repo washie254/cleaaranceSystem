@@ -1,5 +1,6 @@
 <?php 
-	session_start(); 
+  include ('server.php');
+	//session_start(); 
 
 	if (!isset($_SESSION['username'])) {
 		$_SESSION['msg'] = "You must log in first";
@@ -9,7 +10,7 @@
 	if (isset($_GET['logout'])) {
 		session_destroy();
 		unset($_SESSION['username']);
-		header("location: login.php");
+		header("location: dept_login.php");
 	}
 
 ?>
@@ -92,38 +93,16 @@
     <div class="container">
       <h2>CLEARANCE PROGRESS</h2>
        <strong>USER: </strong>
-      <table class="table table-bordered">
-        <thead>
-          <!-- <tr>
-            <th scope="col">REG No. </th>
-            <th scope="col">COD</th>
-            <th scope="col">librarian</th>
-            <th scope="col">Housekeeper</th>
-            <th scope="col">Dean of Students</th>
-            <th scope="col">Sports Officer</th>
-            <th scope="col">Registrar</th>
-            <th scope="col">Finance</th>
-          </tr>
-        </thead>
-        <tbody> -->
+     
+         
           <!-- [ LOOP THE CLEARANCE STATUS OF THE STUDENTS ] --> 
           <?php
-            $db = "clearance_system";  //masked for security
-            $host = "localhost"; //masked for security
-            $user = "root";//masked for security
-            $pwd = ""; //masked for security
-            $con = mysqli_connect($host,$user,$pwd,$db);
-
-            if (!$con) {
-              die('Could not connect: ' . mysqli_error($con));
-            }
+            
             $user =$_SESSION['username'];
             echo $user;
 
-            //Determine the Loged in Department
-            //departmment
             $sql0 = "SELECT  * FROM depertment_officers WHERE username = '$user'";
-            $result0 = mysqli_query($con, $sql0);
+            $result0 = mysqli_query($db, $sql0);
             $row = mysqli_fetch_assoc($result0);
             $dept = $row['departmment'];
             $deptid = $row['id'];
@@ -132,22 +111,7 @@
             echo '<br>';
             echo "<b>CURRENT DEPARTMENT : </b>".$dept;
             echo "<b><br>DEPT ID :  </b>".$deptid;
-            echo "<br>";
-
-            // if(isset($_GET['id']) && is_numeric($_GET['id']))
-            // {
-            //   //$dept=$_GET[$dept];
-            //   $id = $_GET['id'];
-            //   $update = "UPDATE clearance SET $dept='$clr' WHERE id='$id' ";
-            //   $up = mysqli_query($conn, $update);
-            //   if(!isset($sql)){
-            //   die ("Error $sql" .mysqli_connect_error());
-            //   }
-            //   else
-            //   {
-            //   header("location: dept_index.php");
-            //   }
-            // }            
+            echo "<br>";       
 
             switch ($deptid) {
 //  ======================================================================
@@ -157,8 +121,10 @@
                   echo "HELLO COD!";
                   $de = "cod";
                   $sql = "SELECT * FROM clearance WHERE cod = '$pen'";
-                  $result = mysqli_query($con, $sql);
+                  $result = mysqli_query($db, $sql);
               ?>
+               <table class="table table-bordered">
+                <thead>
                   <tr>
                     <th scope="col">STD ID</th>
                     <th scope="col">REG No. </th>
@@ -179,19 +145,8 @@
                       echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
                       echo  '</tr>';
                       echo '</form>';
-                    ?>
-                     <script>
-                        var student=<?php echo $row[1]; ?>;
-                        function update()
-                        {
-                          var x;
-                          if(confirm( student +  'CLeared Successfully') == true)
-                          {
-                            x= "update";
-                          }
-                        }
-                      </script>
-                    <?php 
+                   echo '</tbody>
+                   </table>';
                      
                      
                     } 
@@ -204,8 +159,10 @@
                   echo "HELLO MSEE WA BOOKS!";
                   $de = "librarian";
                   $sql = "SELECT * FROM clearance WHERE librarian = '$pen'";
-                  $result = mysqli_query($con, $sql);
+                  $result = mysqli_query($db, $sql);
               ?>
+              <table class="table table-bordered">
+                <thead>
                   <tr>
                     <th scope="col">REG No. </th>
                     <th scope="col">COD</th>
@@ -225,6 +182,8 @@
                       echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
                       echo  '</tr>';
                     } 
+                  echo '</tbody>
+                  </table>';
                   break;
 //  ======================================================================
 //  :::::::::::::::::::; HOUSE KEEPER ::::::::::::::::::::::::::::::::
@@ -234,8 +193,10 @@
                   echo "HELLO HOUSEKEEPER!";
                   $de = "housekeeper";
                   $sql = "SELECT * FROM clearance WHERE housekeeper = '$pen'";
-                  $result = mysqli_query($con, $sql);
+                  $result = mysqli_query($db, $sql);
               ?>
+              <table class="table table-bordered">
+                <thead>
                   <tr>
                     <th scope="col">REG No. </th>
                     <th scope="col">COD</th>
@@ -257,6 +218,8 @@
                       echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
                       echo  '</tr>';
                     } 
+                    echo '</tbody>
+                    </table>';
                   break;
 //  ======================================================================
 //  :::::::::::::::::::; DEAN OF STUDENTS  ::::::::::::::::::::::::::::::::
@@ -265,8 +228,10 @@
                 echo "HELLO DEAN!";
                 $de = "dean_of_students";
                 $sql = "SELECT * FROM clearance WHERE  dean_of_students='$pen'";
-                $result = mysqli_query($con, $sql);
+                $result = mysqli_query($db, $sql);
                 ?>
+                <table class="table table-bordered">
+                <thead>
                 <tr>
                   <th scope="col">REG No. </th>
                   <th scope="col">HOUSEKEEPER</th>
@@ -284,6 +249,8 @@
                     echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
                     echo  '</tr>';
                   } 
+                  echo '</tbody>
+                  </table>';
                 break;
 
 //  ======================================================================
@@ -293,8 +260,10 @@
                 echo "HELLO SPORTS OFFICER !";
                 $de = "sports_officer";
                 $sql = "SELECT * FROM clearance WHERE sports_officer='$pen'";
-                $result = mysqli_query($con, $sql);
+                $result = mysqli_query($db, $sql);
                 ?>
+                <table class="table table-bordered">
+                <thead>
                 <tr>
                   <th scope="col">REG No. </th>
                   <th scope="col">DEAN OF STUDENTS</th>
@@ -312,6 +281,8 @@
                     echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
                     echo  '</tr>';
                   } 
+                  echo '</tbody>
+                  </table>';
                 break;
 
 //  ======================================================================
@@ -321,8 +292,10 @@
               echo "HELLO REGISTRAR !";
               $de = "registrar";
               $sql = "SELECT * FROM clearance WHERE registrar='$pen' ";
-              $result = mysqli_query($con, $sql);
+              $result = mysqli_query($db, $sql);
               ?>
+              <table class="table table-bordered">
+                <thead>
               <tr>
                 <th scope="col">REG No. </th>
                 <th scope="col">SPORTS OFFICER</th>
@@ -340,6 +313,8 @@
                   echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
                   echo  '</tr>';
                 } 
+                echo '</tbody>
+                </table>';
               break;
 
 //  ======================================================================
@@ -349,8 +324,10 @@
                 echo "HELLO FINANCE DEPARTMENT !";
                 $de = "finance";
                 $sql = "SELECT * FROM clearance WHERE  finance = '$pen'";
-                $result = mysqli_query($con, $sql);
+                $result = mysqli_query($db, $sql);
                 ?>
+                <table class="table table-bordered">
+                <thead>
                 <tr>
                   <th scope="col">REG NU. </th>
                   <th scope="col">REGISTRAR</th>
@@ -368,6 +345,9 @@
                     echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
                     echo  '</tr>';
                   } 
+                  echo '</tbody>
+                  </table>';
+
                 break;
 
               default:
