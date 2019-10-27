@@ -120,7 +120,8 @@
               case "1": //COD
                   echo "HELLO COD!";
                   $de = "cod";
-                  $sql = "SELECT * FROM clearance WHERE cod = '$pen'";
+                  $sql = "SELECT * FROM clearance WHERE cod = '$pen' ORDER BY student_reg";
+                 // $sql = "SELECT * FROM tablelist1   WHERE NOT EXISTS (SELECT JID FROM tablelog2 WHERE UID = 'X') "
                   $result = mysqli_query($db, $sql);
               ?>
                <table class="table table-bordered">
@@ -130,26 +131,65 @@
                     <th scope="col">REG No. </th>
                     <th scope="col">COD</th>
                     <th scope="col">CLEAR</th>
-                    <th scope="col">NOT CLEARED</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php
                     echo '<form method="post">';
                     while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
-                      echo '<tr>';
-                      echo '<td>'.$row[0].'</td>';
-                      echo  '<th scope="row">'.$row[1].'</th>';
-                      echo '<td>'.$row[2].'</td>';
-                      echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
-                      echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
-                      echo  '</tr>';
-                      echo '</form>';
-                   echo '</tbody>
-                   </table>';
-                     
-                     
+                      
+                      $stid = $row[0];
+                      $reg = $row[1];
+                      $cod = $row[2];
+                      
+                      //see if record already has issues if so skip from list of the once being cleared
+                      $query = mysqli_query($db, "SELECT * FROM issue_cod WHERE  std_reg = '$reg'");
+                      $number=mysqli_num_rows($query);
+                      if($number == 0){
+
+                        echo '<tr>';
+                        echo '<td>'.$stid.'</td>';
+                        echo  '<th scope="row">'.$reg.'</th>';
+                        echo '<td>'.$cod.'</td>';
+                        echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
+                        echo  '</tr>';
+                        echo '</form>';   
+                      }    
                     } 
+                    echo '</tbody>
+                   </table>';
+
+                   echo '<br>';
+                   ?>
+                   <h2>Students with issues</h2>
+                   <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">is ID</th>
+                        <th scope="col">REG No. </th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $sql = "SELECT * FROM issue_cod WHERE status = '$pen'";
+                     $result = mysqli_query($db, $sql);
+                      echo '<form method="post">';
+                      while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                        echo '<tr>';
+                          echo '<td>'.$row[0].'</td>';
+                          echo  '<td>'.$row[1].'</th>';
+                          echo '<td>'.$row[2].'</td>';
+                          echo '<td>'.$row[3].'</td>';
+                          echo '<td>'.$row[4].'</td>';
+                        echo  '</tr>';
+                        echo '</form>';       
+                      } 
+                      echo '</tbody>
+                    </table>';
+        
                   break;
 
 //  ======================================================================
@@ -168,22 +208,65 @@
                     <th scope="col">COD</th>
                     <th scope="col">librarian</th>
                     <th scope="col">CLEAR</th>
-                    <th scope="col">NOT CLEARED</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php
+                <?php
+                    echo '<form method="post">';
                     while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
-                      echo '<tr>';
-                      echo  '<th scope="row">'.$row[1].'</th>';
-                      echo '<td>'.$row[2].'</td>';
-                      echo '<td>'.$row[3].'</td>';
-                      echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
-                      echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
-                      echo  '</tr>';
+                      
+                      $stid = $row[0];
+                      $reg = $row[1];
+                      $cod = $row[2];
+                      
+                      //see if record already has issues if so skip from list of the once being cleared
+                      $query = mysqli_query($db, "SELECT * FROM issue_librarian WHERE  std_reg = '$reg'");
+                      $number=mysqli_num_rows($query);
+                      if($number == 0){
+
+                        echo '<tr>';
+                        echo '<td>'.$stid.'</td>';
+                        echo  '<th scope="row">'.$reg.'</th>';
+                        echo '<td>'.$cod.'</td>';
+                        echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
+                        echo  '</tr>';
+                        echo '</form>';   
+                      }    
                     } 
-                  echo '</tbody>
-                  </table>';
+                    echo '</tbody>
+                   </table>';
+
+                   echo '<br>';
+                   ?>
+                   <h2>Students with issues</h2>
+                   <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">is ID</th>
+                        <th scope="col">REG No. </th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $sql = "SELECT * FROM issue_librarian WHERE status = '$pen'";
+                     $result = mysqli_query($db, $sql);
+                      echo '<form method="post">';
+                      while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                        echo '<tr>';
+                          echo '<td>'.$row[0].'</td>';
+                          echo  '<td>'.$row[1].'</th>';
+                          echo '<td>'.$row[2].'</td>';
+                          echo '<td>'.$row[3].'</td>';
+                          echo '<td>'.$row[4].'</td>';
+                        echo  '</tr>';
+                        echo '</form>';       
+                      } 
+                      echo '</tbody>
+                    </table>';
+        
                   break;
 //  ======================================================================
 //  :::::::::::::::::::; HOUSE KEEPER ::::::::::::::::::::::::::::::::
@@ -200,26 +283,67 @@
                   <tr>
                     <th scope="col">REG No. </th>
                     <th scope="col">COD</th>
-                    <th scope="col">librarian</th>
                     <th scope="col">Housekeeper</th>
                     <th scope="col">CLEAR</th>
-                    <th scope="col">NOT CLEARED</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php
+                <?php
+                    echo '<form method="post">';
                     while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
-                      echo '<tr>';
-                      echo  '<th scope="row">'.$row[1].'</th>';
-                      echo '<td>'.$row[2].'</td>';
-                      echo '<td>'.$row[3].'</td>';
-                      echo '<td>'.$row[4].'</td>';
-                      echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
-                      echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
-                      echo  '</tr>';
+                      
+                      $stid = $row[0];
+                      $reg = $row[1];
+                      $cod = $row[2];
+                      
+                      //see if record already has issues if so skip from list of the once being cleared
+                      $query = mysqli_query($db, "SELECT * FROM issue_housekeeper WHERE  std_reg = '$reg'");
+                      $number=mysqli_num_rows($query);
+                      if($number == 0){
+
+                        echo '<tr>';
+                        echo '<td>'.$stid.'</td>';
+                        echo  '<th scope="row">'.$reg.'</th>';
+                        echo '<td>'.$cod.'</td>';
+                        echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
+                        echo  '</tr>';
+                        echo '</form>';   
+                      }    
                     } 
                     echo '</tbody>
+                   </table>';
+
+                   echo '<br>';
+                   ?>
+                   <h2>Students with issues</h2>
+                   <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">is ID</th>
+                        <th scope="col">REG No. </th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $sql = "SELECT * FROM issue_housekeeper WHERE status = '$pen'";
+                     $result = mysqli_query($db, $sql);
+                      echo '<form method="post">';
+                      while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                        echo '<tr>';
+                          echo '<td>'.$row[0].'</td>';
+                          echo  '<td>'.$row[1].'</th>';
+                          echo '<td>'.$row[2].'</td>';
+                          echo '<td>'.$row[3].'</td>';
+                          echo '<td>'.$row[4].'</td>';
+                        echo  '</tr>';
+                        echo '</form>';       
+                      } 
+                      echo '</tbody>
                     </table>';
+        
                   break;
 //  ======================================================================
 //  :::::::::::::::::::; DEAN OF STUDENTS  ::::::::::::::::::::::::::::::::
@@ -233,25 +357,70 @@
                 <table class="table table-bordered">
                 <thead>
                 <tr>
+                  <th scope="col">ID</th>
                   <th scope="col">REG No. </th>
-                  <th scope="col">HOUSEKEEPER</th>
+                  <th scope="col">DEAN OF STUDENTS</th>
                   <th scope="col">CLEAR</th>
-                  <th scope="col">NOT CLEARED</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                  while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
-                    echo '<tr>';
-                    echo  '<th scope="row">'.$row[1].'</th>';
-                    echo '<td>'.$row[4].'</td>';
-                    echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
-                    echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
-                    echo  '</tr>';
-                  } 
-                  echo '</tbody>
-                  </table>';
-                break;
+                    echo '<form method="post">';
+                    while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                      
+                      $stid = $row[0];
+                      $reg = $row[1];
+                      $cod = $row[2];
+                      
+                      //see if record already has issues if so skip from list of the once being cleared
+                      $query = mysqli_query($db, "SELECT * FROM issue_deanofstudents WHERE  std_reg = '$reg'");
+                      $number=mysqli_num_rows($query);
+                      if($number == 0){
+
+                        echo '<tr>';
+                        echo '<td>'.$stid.'</td>';
+                        echo  '<th scope="row">'.$reg.'</th>';
+                        echo '<td>'.$cod.'</td>';
+                        echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
+                        echo  '</tr>';
+                        echo '</form>';   
+                      }    
+                    } 
+                    echo '</tbody>
+                   </table>';
+
+                   echo '<br>';
+                   ?>
+                   <h2>Students with issues</h2>
+                   <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">is ID</th>
+                        <th scope="col">REG No. </th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $sql = "SELECT * FROM issue_deanofstudents WHERE status = '$pen'";
+                     $result = mysqli_query($db, $sql);
+                      echo '<form method="post">';
+                      while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                        echo '<tr>';
+                          echo '<td>'.$row[0].'</td>';
+                          echo  '<td>'.$row[1].'</th>';
+                          echo '<td>'.$row[2].'</td>';
+                          echo '<td>'.$row[3].'</td>';
+                          echo '<td>'.$row[4].'</td>';
+                        echo  '</tr>';
+                        echo '</form>';       
+                      } 
+                      echo '</tbody>
+                    </table>';
+        
+                  break;
 
 //  ======================================================================
 //  :::::::::::::::::::; SPORTS OFFICER ::::::::::::::::::::::::::::::::
@@ -265,26 +434,70 @@
                 <table class="table table-bordered">
                 <thead>
                 <tr>
+                  <th scope="col"> Id.</th>
                   <th scope="col">REG No. </th>
-                  <th scope="col">DEAN OF STUDENTS</th>
+                  <th scope="col">SPORTS OFFICER</th>
                   <th scope="col">CLEAR</th>
-                  <th scope="col">NOT CLEARED</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                  while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
-                    echo '<tr>';
-                    echo  '<th scope="row">'.$row[1].'</th>';
-                    echo '<td>'.$row[5].'</td>';
-                    echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
-                    echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
-                    echo  '</tr>';
-                  } 
-                  echo '</tbody>
-                  </table>';
-                break;
+                    echo '<form method="post">';
+                    while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                      
+                      $stid = $row[0];
+                      $reg = $row[1];
+                      $cod = $row[2];
+                      
+                      //see if record already has issues if so skip from list of the once being cleared
+                      $query = mysqli_query($db, "SELECT * FROM issue_sportsofficer WHERE  std_reg = '$reg'");
+                      $number=mysqli_num_rows($query);
+                      if($number == 0){
 
+                        echo '<tr>';
+                        echo '<td>'.$stid.'</td>';
+                        echo  '<th scope="row">'.$reg.'</th>';
+                        echo '<td>'.$cod.'</td>';
+                        echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
+                        echo  '</tr>';
+                        echo '</form>';   
+                      }    
+                    } 
+                    echo '</tbody>
+                   </table>';
+
+                   echo '<br>';
+                   ?>
+                   <h2>Students with issues</h2>
+                   <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">is ID</th>
+                        <th scope="col">REG No. </th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $sql = "SELECT * FROM issue_sportsofficer WHERE status = '$pen'";
+                     $result = mysqli_query($db, $sql);
+                      echo '<form method="post">';
+                      while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                        echo '<tr>';
+                          echo '<td>'.$row[0].'</td>';
+                          echo  '<td>'.$row[1].'</th>';
+                          echo '<td>'.$row[2].'</td>';
+                          echo '<td>'.$row[3].'</td>';
+                          echo '<td>'.$row[4].'</td>';
+                        echo  '</tr>';
+                        echo '</form>';       
+                      } 
+                      echo '</tbody>
+                    </table>';
+        
+                  break;
 //  ======================================================================
 //  :::::::::::::::::::; REGISTRAR ::::::::::::::::::::::::::::::::
 //  ======================================================================
@@ -298,24 +511,69 @@
                 <thead>
               <tr>
                 <th scope="col">REG No. </th>
-                <th scope="col">SPORTS OFFICER</th>
+                <th scope="col">REGISTRAR</th>
                 <th scope="col">CLEAR</th>
                 <th scope="col">NOT CLEARED</th>
               </tr>
               </thead>
               <tbody>
               <?php
-                while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
-                  echo '<tr>';
-                  echo  '<th scope="row">'.$row[1].'</th>';
-                  echo '<td>'.$row[6].'</td>';
-                  echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
-                  echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
-                  echo  '</tr>';
-                } 
-                echo '</tbody>
-                </table>';
-              break;
+                    echo '<form method="post">';
+                    while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                      
+                      $stid = $row[0];
+                      $reg = $row[1];
+                      $cod = $row[2];
+                      
+                      //see if record already has issues if so skip from list of the once being cleared
+                      $query = mysqli_query($db, "SELECT * FROM issue_registrar WHERE  std_reg = '$reg'");
+                      $number=mysqli_num_rows($query);
+                      if($number == 0){
+
+                        echo '<tr>';
+                        echo '<td>'.$stid.'</td>';
+                        echo  '<th scope="row">'.$reg.'</th>';
+                        echo '<td>'.$cod.'</td>';
+                        echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
+                        echo  '</tr>';
+                        echo '</form>';   
+                      }    
+                    } 
+                    echo '</tbody>
+                   </table>';
+
+                   echo '<br>';
+                   ?>
+                   <h2>Students with issues</h2>
+                   <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">is ID</th>
+                        <th scope="col">REG No. </th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $sql = "SELECT * FROM issue_registrar WHERE status = '$pen'";
+                     $result = mysqli_query($db, $sql);
+                      echo '<form method="post">';
+                      while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                        echo '<tr>';
+                          echo '<td>'.$row[0].'</td>';
+                          echo  '<td>'.$row[1].'</th>';
+                          echo '<td>'.$row[2].'</td>';
+                          echo '<td>'.$row[3].'</td>';
+                          echo '<td>'.$row[4].'</td>';
+                        echo  '</tr>';
+                        echo '</form>';       
+                      } 
+                      echo '</tbody>
+                    </table>';
+        
+                  break;
 
 //  ======================================================================
 //  :::::::::::::::::::; FINANCE ::::::::::::::::::::::::::::::::
@@ -337,18 +595,62 @@
                 </thead>
                 <tbody>
                 <?php
-                  while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
-                    echo '<tr>';
-                    echo  '<th scope="row">'.$row[1].'</th>';
-                    echo '<td>'.$row[7].'</td>';
-                    echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
-                    echo '<td><a href="issues.php?id='.$row[1].'&dept='.$de.'"><strong><button type="button" class="btn btn-danger">PIN ISSUE</button></td>';
-                    echo  '</tr>';
-                  } 
-                  echo '</tbody>
-                  </table>';
+                    echo '<form method="post">';
+                    while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                      
+                      $stid = $row[0];
+                      $reg = $row[1];
+                      $cod = $row[2];
+                      
+                      //see if record already has issues if so skip from list of the once being cleared
+                      $query = mysqli_query($db, "SELECT * FROM issue_finance WHERE  std_reg = '$reg'");
+                      $number=mysqli_num_rows($query);
+                      if($number == 0){
 
-                break;
+                        echo '<tr>';
+                        echo '<td>'.$stid.'</td>';
+                        echo  '<th scope="row">'.$reg.'</th>';
+                        echo '<td>'.$cod.'</td>';
+                        echo '<td><a href="clear.php?id='.$row[0].'&dept='.$de.'"><strong><button type="button" class="btn btn-success">CLEAR</button></td>';
+                        echo  '</tr>';
+                        echo '</form>';   
+                      }    
+                    } 
+                    echo '</tbody>
+                   </table>';
+
+                   echo '<br>';
+                   ?>
+                   <h2>Students with issues</h2>
+                   <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">is ID</th>
+                        <th scope="col">REG No. </th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $sql = "SELECT * FROM issue_finance WHERE status = '$pen'";
+                     $result = mysqli_query($db, $sql);
+                      echo '<form method="post">';
+                      while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                        echo '<tr>';
+                          echo '<td>'.$row[0].'</td>';
+                          echo  '<td>'.$row[1].'</th>';
+                          echo '<td>'.$row[2].'</td>';
+                          echo '<td>'.$row[3].'</td>';
+                          echo '<td>'.$row[4].'</td>';
+                        echo  '</tr>';
+                        echo '</form>';       
+                      } 
+                      echo '</tbody>
+                    </table>';
+        
+                  break;
 
               default:
                   echo "CAN'T RESOLVE YOUR DEPARTMRENT!";

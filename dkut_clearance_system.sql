@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2019 at 08:56 PM
+-- Generation Time: Oct 27, 2019 at 10:41 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -65,9 +65,9 @@ CREATE TABLE `clearance` (
 --
 
 INSERT INTO `clearance` (`id`, `student_reg`, `cod`, `librarian`, `housekeeper`, `dean_of_students`, `sports_officer`, `registrar`, `finance`) VALUES
-(1, 'C025-02-0032/2016', 'CLEARED', 'CLEARED', 'CLEARED', 'CLEARED', 'CLEARED', 'CLEARED', 'CLEARED'),
-(2, 'C025-02-0033/2016', 'CLEARED', 'ISSUE', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING'),
-(3, 'C026-02-0040/2016', 'ISSUE', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING'),
+(1, 'C025-02-0032/2016', 'PENDING', 'CLEARED', 'CLEARED', 'CLEARED', 'CLEARED', 'CLEARED', 'PENDING'),
+(2, 'C025-02-0033/2016', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING'),
+(3, 'C026-02-0040/2016', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING'),
 (4, 'C026-02-0041/2016', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING');
 
 -- --------------------------------------------------------
@@ -181,6 +181,13 @@ CREATE TABLE `issue_deanofstudents` (
   `status` varchar(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `issue_deanofstudents`
+--
+
+INSERT INTO `issue_deanofstudents` (`id`, `std_reg`, `category`, `description`, `status`) VALUES
+(1, 'C026-02-0041/2016', 'Co Carricular', 'some papers need to be signed by student.kindly meet dean in the office for clearance', 'PENDING');
+
 -- --------------------------------------------------------
 
 --
@@ -194,6 +201,13 @@ CREATE TABLE `issue_finance` (
   `description` varchar(255) NOT NULL,
   `status` varchar(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `issue_finance`
+--
+
+INSERT INTO `issue_finance` (`id`, `std_reg`, `category`, `description`, `status`) VALUES
+(1, 'C026-02-0041/2016', 'Ariase', 'not completed fees ', 'PENDING');
 
 -- --------------------------------------------------------
 
@@ -209,6 +223,13 @@ CREATE TABLE `issue_housekeeper` (
   `status` varchar(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `issue_housekeeper`
+--
+
+INSERT INTO `issue_housekeeper` (`id`, `std_reg`, `category`, `description`, `status`) VALUES
+(1, 'C025-02-0033/2016', 'Vundalism', 'Broke Pane at Batian Hostels', 'PENDING');
+
 -- --------------------------------------------------------
 
 --
@@ -222,6 +243,13 @@ CREATE TABLE `issue_librarian` (
   `description` varchar(255) NOT NULL,
   `status` varchar(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `issue_librarian`
+--
+
+INSERT INTO `issue_librarian` (`id`, `std_reg`, `category`, `description`, `status`) VALUES
+(1, 'C026-02-0040/2016', 'Lost Book', 'Book Tile: The infinity war', 'PENDING');
 
 -- --------------------------------------------------------
 
@@ -250,6 +278,14 @@ CREATE TABLE `issue_sportsofficer` (
   `description` varchar(255) NOT NULL,
   `status` varchar(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `issue_sportsofficer`
+--
+
+INSERT INTO `issue_sportsofficer` (`id`, `std_reg`, `category`, `description`, `status`) VALUES
+(1, 'C025-02-0033/2016', 'Lost Item', 'Misplaced the hocky stick size 32xwd, need to avail with a replacement to sports office to be cleared', 'PENDING'),
+(2, 'C026-02-0041/2016', 'Damages', 'need to repair the DKUT football tem banner after it was damaeged under your possesioin. see sports officer for clearance ', 'PENDING');
 
 -- --------------------------------------------------------
 
@@ -400,25 +436,25 @@ ALTER TABLE `issue_cod`
 -- AUTO_INCREMENT for table `issue_deanofstudents`
 --
 ALTER TABLE `issue_deanofstudents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `issue_finance`
 --
 ALTER TABLE `issue_finance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `issue_housekeeper`
 --
 ALTER TABLE `issue_housekeeper`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `issue_librarian`
 --
 ALTER TABLE `issue_librarian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `issue_registrar`
@@ -430,7 +466,7 @@ ALTER TABLE `issue_registrar`
 -- AUTO_INCREMENT for table `issue_sportsofficer`
 --
 ALTER TABLE `issue_sportsofficer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
