@@ -3,7 +3,7 @@
 $server = 'localhost';
 $user = 'root';
 $pass = '';
-$db = 'clearance_system';
+$db = 'dkut_clearance_system';
 
 // connect to the database
 $mysqli = new mysqli($server, $user, $pass, $db);
