@@ -144,7 +144,12 @@
       </table>
       <?php
         if( ($cod =='CLEARED') && ($cod == $lib) && ($lib== $hse) && ($hse==$dos) && ($dos== $sprt) && ($sprt==$rgtr) && ($rgtr==$fin)){
-              echo "Fantastice. you can download the Department Clearance form";
+              echo "<div style='padding: 6px 12px; border: 1px solid #ccc; background-color:rgba(10, 200, 0, 0.3);'>
+                  <h4>All Cleared !!</h4>
+                  <a href='#' ><i class='fa fa-download'></i><b>'.$user.'</b></a><br>
+                  Fantastick. you can download the Department Clearance form";
+              echo '<button class="btn btn-primary" style="width:100%"><i class="fa fa-download"></i>Download Clearance Form</button>';
+              echo '</div>';
         }
       ?>
     </div>
