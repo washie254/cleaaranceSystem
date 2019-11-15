@@ -1,6 +1,6 @@
 <?php 
   include('server.php');
-	session_start(); 
+	// session_start(); 
 
 	if (!isset($_SESSION['username'])) {
 		$_SESSION['msg'] = "You must log in first";
@@ -156,31 +156,137 @@
             <th scope="col">Department</th>
             <th scope="col">Issue Category</th>
             <th scope="col">Description</th>
-            <th scope="col">monetary value</th>
-            <th scope="col">Date</th>
+            <th scope="col">Status</th>
           </tr>
         </thead>
         <tbody>
-          <!-- [ LOOP THE CLEARANCE STATUS OF THE STUDENTS ] -->
-          <tr>
-            <?php
-           
-              $user =$_SESSION['username'];
-              // echo $user;
-				      $sql = "SELECT * FROM issues WHERE std_reg = '$user' ";
+          <?php
+            $user =$_SESSION['username'];
+          ?>
+          <!-- [ LOOP THE ISSUES FROM ALL DEPARTMENTS IF ANY  ] -->
+          <?php
+            $sqlcod = "SELECT * FROM issue_cod WHERE std_reg='$user'";
+            $sqldeanofstudents = "SELECT * FROM issue_deanofstudents WHERE std_reg='$user'";
+            $sqlfinance = "SELECT * FROM issue_finance WHERE std_reg='$user'";
+            $sqlhousekeeper = "SELECT * FROM issue_housekeeper WHERE std_reg='$user'";
+            $sqllibrarian = "SELECT * FROM issue_librarian WHERE std_reg='$user'";
+            $sqlregistrar = "SELECT * FROM issue_registrar WHERE std_reg='$user'";
+            $sqlsportsofficer = "SELECT * FROM issue_cod WHERE std_reg='$user'";
+
+		        $rescod = mysqli_query($db, $sqlcod);
+		        $resdeanofstudents = mysqli_query($db, $sqldeanofstudents);
+		        $resfinance = mysqli_query($db, $sqlfinance);
+		        $reshousekeeper = mysqli_query($db, $sqlhousekeeper);
+		        $reslibrarian = mysqli_query($db, $sqllibrarian);
+		        $resregistrar = mysqli_query($db, $sqlregistrar);
+            $ressportsofficer = mysqli_query($db, $sqlsportsofficer);
+            
+            if (mysqli_num_rows($rescod) > 0) {
+                echo '<tr>' ;
+                    $sql = "SELECT * FROM issue_cod WHERE std_reg = '$user' ";
+                    $result = mysqli_query($db, $sql);
+
+                    while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                      $dept = 'COD';
+                      echo '<td>'.$row[1].'</td>';
+                      echo '<td>'.$dept.'</td>';
+                      echo '<td>'.$row[2].'</td>';
+                      echo '<td>'.$row[3].'</td>';
+                      echo '<td>'.$row[4].'</td>';
+                    }
+                echo '</tr>';
+            }
+            if (mysqli_num_rows($resdeanofstudents) > 0) {
+              echo '<tr>' ;
+                  $sql = "SELECT * FROM issue_deanofstudents WHERE std_reg = '$user' ";
+                  $result = mysqli_query($db, $sql);
+
+                  while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                    $dept = 'Dean Of Students';
+                    echo '<td>'.$row[1].'</td>';
+                    echo '<td>'.$dept.'</td>';
+                    echo '<td>'.$row[2].'</td>';
+                    echo '<td>'.$row[3].'</td>';
+                    echo '<td>'.$row[4].'</td>';
+                  }
+              echo '</tr>';
+          }
+          if (mysqli_num_rows($resfinance) > 0) {
+            echo '<tr>' ;
+                $sql = "SELECT * FROM issue_finance WHERE std_reg = '$user' ";
+                $result = mysqli_query($db, $sql);
+
+                while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                  $dept = 'Finance';
+                  echo '<td>'.$row[1].'</td>';
+                  echo '<td>'.$dept.'</td>';
+                  echo '<td>'.$row[2].'</td>';
+                  echo '<td>'.$row[3].'</td>';
+                  echo '<td>'.$row[4].'</td>';
+                }
+            echo '</tr>';
+        }
+        if (mysqli_num_rows($reshousekeeper) > 0) {
+          echo '<tr>' ;
+              $sql = "SELECT * FROM issue_housekeeper WHERE std_reg = '$user' ";
               $result = mysqli_query($db, $sql);
 
               while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                $dept = 'HouseKeeper';
                 echo '<td>'.$row[1].'</td>';
+                echo '<td>'.$dept.'</td>';
                 echo '<td>'.$row[2].'</td>';
                 echo '<td>'.$row[3].'</td>';
-                echo '<td>'.$row[5].'</td>';
                 echo '<td>'.$row[4].'</td>';
-                echo '<td>'.$row[6].'</td>';
               }
-            ?>
+          echo '</tr>';
+      }
+      if (mysqli_num_rows($reslibrarian) > 0) {
+        echo '<tr>' ;
+            $sql = "SELECT * FROM issue_librarian WHERE std_reg = '$user' ";
+            $result = mysqli_query($db, $sql);
 
-          </tr>
+            while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+              $dept = 'Librarian';
+              echo '<td>'.$row[1].'</td>';
+              echo '<td>'.$dept.'</td>';
+              echo '<td>'.$row[2].'</td>';
+              echo '<td>'.$row[3].'</td>';
+              echo '<td>'.$row[4].'</td>';
+            }
+        echo '</tr>';
+    }
+    if (mysqli_num_rows($resregistrar) > 0) {
+      echo '<tr>' ;
+          $sql = "SELECT * FROM issue_house WHERE std_reg = '$user' ";
+          $result = mysqli_query($db, $sql);
+
+          while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+            $dept = 'Registrar';
+            echo '<td>'.$row[1].'</td>';
+            echo '<td>'.$dept.'</td>';
+            echo '<td>'.$row[2].'</td>';
+            echo '<td>'.$row[3].'</td>';
+            echo '<td>'.$row[4].'</td>';
+          }
+      echo '</tr>';
+      }
+      if (mysqli_num_rows($ressportsofficer) > 0) {
+        echo '<tr>' ;
+            $sql = "SELECT * FROM issue_house WHERE std_reg = '$user' ";
+            $result = mysqli_query($db, $sql);
+
+            while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+              $dept = 'Sports Officer';
+              echo '<td>'.$row[1].'</td>';
+              echo '<td>'.$dept.'</td>';
+              echo '<td>'.$row[2].'</td>';
+              echo '<td>'.$row[3].'</td>';
+              echo '<td>'.$row[4].'</td>';
+            }
+        echo '</tr>';
+        }
+      ?> 
         </tbody>
       </table>
         </div>
