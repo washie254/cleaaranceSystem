@@ -27,7 +27,7 @@
 		</div>
         
 		<p>
-			Not  a Member <a href="login.php">Register</a>
+			Not  a Member <a href="register.php">Register</a>
 		</p>
 	</form>
 </body>

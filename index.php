@@ -128,6 +128,7 @@
               $result = mysqli_query($db, $sql);
               
               while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                $cod = $row[2];  $lib = $row[3];  $hse = $row[4]; $dos = $row[5]; $sprt= $row[6]; $rgtr= $row[7]; $fin = $row[8];
                 echo '<td>'.$row[2].'</td>';
                 echo '<td>'.$row[3].'</td>';
                 echo '<td>'.$row[4].'</td>';
@@ -141,6 +142,11 @@
           </tr>
         </tbody>
       </table>
+      <?php
+        if( ($cod =='CLEARED') && ($cod == $lib) && ($lib== $hse) && ($hse==$dos) && ($dos== $sprt) && ($sprt==$rgtr) && ($rgtr==$fin)){
+              echo "Fantastice. you can download the Department Clearance form";
+        }
+      ?>
     </div>
 
 
