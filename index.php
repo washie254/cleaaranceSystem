@@ -171,7 +171,7 @@
             $sqlhousekeeper = "SELECT * FROM issue_housekeeper WHERE std_reg='$user'";
             $sqllibrarian = "SELECT * FROM issue_librarian WHERE std_reg='$user'";
             $sqlregistrar = "SELECT * FROM issue_registrar WHERE std_reg='$user'";
-            $sqlsportsofficer = "SELECT * FROM issue_cod WHERE std_reg='$user'";
+            $sqlsportsofficer = "SELECT * FROM issue_sportsofficer WHERE std_reg='$user'";
 
 		        $rescod = mysqli_query($db, $sqlcod);
 		        $resdeanofstudents = mysqli_query($db, $sqldeanofstudents);
@@ -258,7 +258,7 @@
     }
     if (mysqli_num_rows($resregistrar) > 0) {
       echo '<tr>' ;
-          $sql = "SELECT * FROM issue_house WHERE std_reg = '$user' ";
+          $sql = "SELECT * FROM issue_registrar WHERE std_reg = '$user' ";
           $result = mysqli_query($db, $sql);
 
           while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
@@ -273,7 +273,7 @@
       }
       if (mysqli_num_rows($ressportsofficer) > 0) {
         echo '<tr>' ;
-            $sql = "SELECT * FROM issue_house WHERE std_reg = '$user' ";
+            $sql = "SELECT * FROM issue_sportsofficer WHERE std_reg = '$user' ";
             $result = mysqli_query($db, $sql);
 
             while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
