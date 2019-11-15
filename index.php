@@ -148,7 +148,7 @@
                   <h4>All Cleared !!</h4>
                   <a href='#' ><i class='fa fa-download'></i><b>'.$user.'</b></a><br>
                   Fantastick. you can download the Department Clearance form";
-              echo '<button class="btn btn-primary" style="width:100%"><i class="fa fa-download"></i>Download Clearance Form</button>';
+              echo '<a href="pdf/pdf.php?reg='.$user.'" target="0"><button class="btn btn-primary" style="width:100%"><i class="fa fa-download"></i>Download Clearance Form</button></a>';
               echo '</div>';
         }
       ?>
