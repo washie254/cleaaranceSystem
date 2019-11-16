@@ -110,7 +110,6 @@
 			$_SESSION['success'] = "You are now logged in";
 			header('location: admin_index.php');
 		}
-
 	}
 
 	// LOGIN ADMIN
@@ -165,10 +164,8 @@
 						VALUES('$username', '$password', '$dept', '$cdate')";
 			mysqli_query($db, $query);
 			
-
 			header('location: admin_dept.php');
 		}
-
 
 	}
 
@@ -221,36 +218,5 @@
 
 			header('location: dept_index.php');
 		}
-	}
-
-	if (isset($_POST['add_gawn'])) {
-		// receive all input values from the form
-		$username = mysqli_real_escape_string($db, $_POST['username']);
-		$email = mysqli_real_escape_string($db, $_POST['email']);
-		$password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
-		$password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
-
-		// form validation: ensure that the form is correctly filled
-		if (empty($username)) { array_push($errors, "Username is required"); }
-		if (empty($password_1)) { array_push($errors, "Password is required"); }
-		if (empty($password_1)) { array_push($errors, "you must confirm password"); }
-
-		if ($password_1 != $password_2) {
-			array_push($errors, "The two passwords do not match");
-		}
-
-		// register user if there are no errors in the form
-		if (count($errors) == 0) {
-			$password = md5($password_1);//encrypt the password before saving in the database
-			//$username = strtoupper($username);
-			$query = "INSERT INTO gawnofficer (username, email, password, dateadded) 
-						VALUES('$username','$email','$password','$cdate')";
-			mysqli_query($db, $query);
-			
-
-			header('location: admin_gawn.php');
-		}
-
-
 	}
 ?>

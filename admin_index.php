@@ -69,6 +69,7 @@
               Others
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="admin_gawn.php">Gawn Officers</a>
               <a class="dropdown-item" href="admin_dd.php">Departments</a>
               <a class="dropdown-item" href="admin_studs.php">Students</a>
             </div>

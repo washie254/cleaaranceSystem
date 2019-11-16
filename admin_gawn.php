@@ -1,4 +1,4 @@
-<?php require('server.php');?>
+<?php include('server.php') ?>
 <?php 
 	//session_start(); 
 
@@ -56,12 +56,12 @@
       <a class="navbar-brand text-brand" href="index.html">Admin <span class="color-b"> Panel</span></a>
       
       <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
-        <ul class="navbar-nav">
+      <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="admin_index.php">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="admin_dept.php"> Officers</a>
+            <a class="nav-link active" href="admin_dept.php"> Officers</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -74,7 +74,7 @@
               <a class="dropdown-item" href="admin_studs.php">Students</a>
             </div>
           </li>
-         
+      
           <!-- logged in user information -->
           <li>
             <?php  if (isset($_SESSION['username'])) : ?>
@@ -96,20 +96,64 @@
 
   <!--/ Testimonials Star /-->
   <section class="section-testimonials section-t8 nav-arrow-a">
-
     <div class="container" style="padding: 6px 12px; border: 1px solid #ccc;">
-      <h2>STUDENTS REGISTERED ON THE CLEARANCE SYSTEM</h2>
-       The following are all the students registered on the clearance system
+      <h2>Manage Gawn Officers</h2>
+       QUICK LINKS: <a class="btn btn-success" href="#addofficers" role="button">Add Officer</a>
+                    <a class="btn btn-success" href="#removeofficers" role="button">Remove  Officer</a>
     </div> 
     <br>
-    <div class="container" style="padding: 6px 12px; border: 1px solid #ccc;" id="officers">
-      <h2>STUDENTS</h2>
-      The registered officers in the System
+    <div class="container" style="padding: 6px 12px; border: 1px solid #ccc;" id="addofficers" >
+      <h2>DEPARTMENTS</h2>
+       Add a gawn Officer
+       <style>
+        .error {
+                width: 92%; 
+                margin: 0px auto; 
+                padding: 10px; 
+                border: 1px solid #a94442; 
+                color: #a94442; 
+                background: #f2dede; 
+                border-radius: 5px; 
+                text-align: left;
+            }
+       </style>
+       <form method="post" action="admin_gawn.php" style="width:100%;">
+            <?php include('errors.php'); ?>
+        
+            <div class="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input type="text" class="form-control" id="exampleInputEmail1"  name="username" placeholder="username">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Password</label>
+                <input type="password" class="form-control" id="exampleInputEmail1" name="password_1" placeholder="Insert Password">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Confirm Password</label>
+                <input type="password" class="form-control" id="exampleInputEmail1" name="password_2" placeholder="Confirm password">
+            </div>
+            <div class="input-group">
+                <button type="submit" class="btn" name="add_gawn">Register</button>
+            </div>
+        </form>
+    </div>
+    
+    <br>
+
+    <div class="container" style="padding: 6px 12px; border: 1px solid #ccc;" id="removeofficers">
+      <h2>OFFICERS</h2>
+      The registered gawn Dept Officers
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th scope="col">Student ID. </th>
-            <th scope="col">Registration Number</th>
+            <th scope="col">Of. ID. </th>
+            <th scope="col">Of. Username</th>
+            <th scope="col">email</th>
+            <th scope="col">Date Added</th>
           </tr>
         </thead>
         <tbody>
@@ -118,7 +162,7 @@
               
               $user =$_SESSION['username'];
               
-				      $sql = "SELECT * FROM users";
+				      $sql = "SELECT * FROM gawnofficer";
               $result = mysqli_query($db, $sql);
         
 
@@ -126,14 +170,20 @@
                 echo '<tr>';
                 echo '<td>'.$row[0].'</td>';
                 echo '<td>'.$row[1].'</td>';
+                echo '<td>'.$row[2].'</td>';
+                echo '<td>'.$row[4].'</td>';
+              //  echo '<td><a href="deleteoff.php?id=' . $row[0] . '"><button class="btn btn-danger">DELETE</button></a></td>';
                 echo'</tr>';
               }
             ?>
         </tbody>
       </table>
     </div>
-    
-   
+
+
+
+
+
   </section>
   <!--/ Testimonials End /-->
 

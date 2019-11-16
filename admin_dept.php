@@ -69,6 +69,7 @@
               Others
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="admin_gawn.php">Gawn Officers</a>
               <a class="dropdown-item" href="admin_dd.php">Departments</a>
               <a class="dropdown-item" href="admin_studs.php">Students</a>
             </div>
@@ -124,10 +125,10 @@
             <div class="input-group">
                 <label>Department</label>
                 <?php
-                    $conn = new mysqli('localhost', 'root', '', 'clearance_system') 
-                    or die ('Cannot connect to db');
+                  //  / $conn = new mysqli('localhost', 'root', '', 'clearance_system') 
+                   // or die ('Cannot connect to db');
                     
-                    $result = $conn->query("select id, dept_name from departments");
+                    $result = $db->query("select id, dept_name from departments");
                     echo "<select name='dept'>";
                         while ($row = $result->fetch_assoc()) {
                             unset($id, $name);
