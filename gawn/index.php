@@ -147,12 +147,32 @@
           </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>C025-02-0029/2015</td>
-                <td>3000</td>
-                <td>2000</td>
-                <td>clear</td>
-            </tr>
+        <?php
+              $stat ='CLEARED';
+              
+              $sql = "SELECT * FROM clearance WHERE cod = '$stat' && librarian='$stat' && librarian='$stat' && 
+              housekeeper='$stat' && dean_of_students='$stat' && sports_officer='$stat' && registrar='$stat' &&
+              finance='$stat' 
+              ORDER BY student_reg";
+              $result = mysqli_query($db, $sql);
+               
+              while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                $reg = $row[1];
+                $sql0 = "SELECT * FROM users WHERE username = '$reg'";
+                $res = mysqli_query($db, $sql0);
+                while($rowz = mysqli_fetch_array($res, MYSQLI_NUM)){
+                  $email = $rowz[2];
+                  $payment = $rowz[5]*1000;
+                  $bal = 5000 - $payment;
+                }
+                echo '<tr>';
+                echo '<td>'.$row[1].'</td>';
+                echo '<td>'.number_format($payment,2).' Ksh</td>';
+                echo '<td>'.number_format($bal,2).' Ksh</td>';
+                echo '<td> Clear</td>';
+                echo '</tr>';
+              }
+            ?>
         </tbody>
       </table>
         </div>
