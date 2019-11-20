@@ -60,9 +60,6 @@
           <li class="nav-item">
             <a class="nav-link active" href="index.php">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
@@ -114,7 +111,8 @@
         </thead>
         <tbody>
           <!-- [ LOOP THE CLEARANCE STATUS OF THE STUDENTS ] -->
-         
+          <tr>
+            <th scope="row"><?php echo $_SESSION['username'];?></th>
             <?php
 
               $user =$_SESSION['username'];
@@ -124,8 +122,6 @@
               
               while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
                 $cod = $row[2];  $lib = $row[3];  $hse = $row[4]; $dos = $row[5]; $sprt= $row[6]; $rgtr= $row[7]; $fin = $row[8];
-                echo' <tr>
-                <th scope="row">'.$_SESSION['username'].'</th>';
                 echo '<td>'.$row[2].'</td>';
                 echo '<td>'.$row[3].'</td>';
                 echo '<td>'.$row[4].'</td>';
@@ -133,11 +129,10 @@
                 echo '<td>'.$row[6].'</td>';
                 echo '<td>'.$row[7].'</td>';
                 echo '<td>'.$row[8].'</td>';
-                echo'</tr>';
               }
             ?>
 
-          
+          </tr>
         </tbody>
       </table>
       <?php
@@ -146,15 +141,9 @@
                   <h4>All Cleared !!</h4>
                   <a href='#' ><i class='fa fa-download'></i><b>'.$user.'</b></a><br>
                   Fantastick. you can download the Department Clearance form";
-              echo '<a href="pdf/pdf.php?reg='.$user.'" target="0"><button class="btn btn-primary" style="width:100%"><i class="fa fa-download"></i>Download Clearance Form</button></a>';
+              echo '<a href="gawn/pdf/pdf.php?reg='.$user.'" target="0"><button class="btn btn-primary" style="width:100%"><i class="fa fa-download"></i>Download Clearance Form</button></a>';
               echo '</div>';
               echo '<br>';
-              echo "<div style='padding: 6px 12px; border: 1px solid #ccc; background-color:rgba(5, 0, 200, 0.3);'>
-              <h4 style='color:white;'>Gawn Clearance !</h4>
-              <a href='#' ><i class='fa fa-download'></i><b>'.$user.'</b></a><br>
-              you can now access gawn clearance here <br>";
-              echo '<a href="gawnpart.php" target="0"><i class="fa fa-book"></i> Gawn Clearance</a>';
-              echo '</div>';
         }
       ?>
     </div>

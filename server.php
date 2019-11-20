@@ -18,10 +18,32 @@
 		// receive all input values from the form
 		$username = mysqli_real_escape_string($db, $_POST['username']);
 		$email = mysqli_real_escape_string($db, $_POST['email']);
+		$phone = mysqli_real_escape_string($db, $_POST['tel']);
 		$password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
 		$password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
 
 		// form validation: ensure that the form is correctly filled
+		function validate_phone_number($phone)
+		{
+			// Allow +, - and . in phone number
+			$filtered_phone_number = filter_var($phone, FILTER_SANITIZE_NUMBER_INT);
+			// Remove "-" from number
+			$phone_to_check = str_replace("-", "", $filtered_phone_number);
+			// Check the lenght of number
+			// This can be customized if you want phone number from a specific country
+			if (strlen($phone_to_check) < 9 || strlen($phone_to_check) > 14) {
+			return false;
+			} else {
+			return true;
+			}
+		}
+		
+		//VALIDATE PHONE NUMBER 
+		if (validate_phone_number($phone) !=true) {
+			array_push($errors, "Invalid phone number");
+		}
+		// form validation: ensure that the form is correctly filled
+		if (empty($phone)) { array_push($errors, "Telephone number s required"); }
 		if (empty($username)) { array_push($errors, "Username is required"); }
 		if (empty($email)) { array_push($errors, "Email is required"); }
 		if (empty($password_1)) { array_push($errors, "Password is required"); }
@@ -35,8 +57,8 @@
 			$password = md5($password_1);//encrypt the password before saving in the database
 			$username = strtoupper($username);
 			$status = "PENDING";
-			$query = "INSERT INTO users (username, email, password) 
-					  VALUES('$username', '$email', '$password')";
+			$query = "INSERT INTO users (username, email, password, tel, gpayment) 
+					  VALUES('$username', '$email', '$password', '$phone', '$pay')";
 			mysqli_query($db, $query);
 
 			$query2 = "INSERT INTO clearance (student_reg, cod, librarian, housekeeper, dean_of_students, sports_officer, registrar, finance) 

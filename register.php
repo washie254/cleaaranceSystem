@@ -23,6 +23,10 @@
 			<input type="email" name="email" value="<?php echo $email; ?>">
 		</div>
 		<div class="input-group">
+			<label>Telphone</label>
+			<input type="number" name="tel" value="<?php echo $email; ?>">
+		</div>
+		<div class="input-group">
 			<label>Password</label>
 			<input type="password" name="password_1">
 		</div>
