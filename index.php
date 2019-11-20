@@ -113,7 +113,6 @@
           </tr>
         </thead>
         <tbody>
-          <!-- [ LOOP THE CLEARANCE STATUS OF THE STUDENTS ] -->
          
             <?php
 

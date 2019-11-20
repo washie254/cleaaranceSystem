@@ -1,6 +1,9 @@
 <?php 
-  include('server.php');
-	// session_start(); 
+    include('server.php');
+    // session_start(); 
+    if (isset($_GET['id'])){
+        $user = $_GET['id'];
+    }
 
 	if (!isset($_SESSION['username'])) {
 		$_SESSION['msg'] = "You must log in first";
@@ -60,18 +63,7 @@
           <li class="nav-item">
             <a class="nav-link active" href="index.php">Home</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              Pages
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="profile.php">Profile</a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
-          </li>
+          
           <!-- logged in user information -->
           <li>
             <?php  if (isset($_SESSION['username'])) : ?>
@@ -94,60 +86,7 @@
   <!--/ Testimonials Star /-->
   <section class="section-testimonials section-t8 nav-arrow-a">
     <div class="container">
-      <h2>CLEARANCE PROGRESS</h2>
-      [[ OUR TABLE HERE ]]
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th scope="col">id# </th>
-            <th scope="col">RegNo</th>
-            <th scope="col">Email</th>
-            <th scope="col">Telephone</th>
-            <th scope="col">Total Payments</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- [ LOOP THE CLEARANCE STATUS OF THE STUDENTS ] -->
-          <tr>
-            <th scope="row"><?php echo $_SESSION['username'];?></th>
-            <?php
-
-              $user =$_SESSION['username'];
-              echo $user;
-				      $sql = "SELECT * FROM users WHERE username = '$user'";
-              $result = mysqli_query($db, $sql);
-              
-              while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
-                $tpayment = $row[5];
-                $dpay = number_format($row[5]*1000,2);
-                echo '<td>'.$row[1].'</td>';
-                echo '<td>'.$row[2].'</td>';
-                echo '<td>'.$row[4].'</td>';
-                echo '<td>'.$dpay.' Ksh</td>';
-              }
-            ?>
-
-          </tr>
-        </tbody>
-      </table>
-      <?php
-        if( $tpayment>=5 ) {
-              echo "<div style='padding: 6px 12px; border: 1px solid #ccc; background-color:rgba(10, 200, 0, 0.3);'>
-                  <h4>Gawn Collection Form !!</h4>
-                  <a href='#' ><i class='fa fa-download'></i><b>'.$user.'</b></a><br>
-                  You can now download the Gawn Collection Form";
-              echo '<a href="gawn/pdf/pdf.php?reg='.$user.'" target="0"><button class="btn btn-primary" style="width:100%"><i class="fa fa-download"></i>Download Gawn Form</button></a>';
-              echo '</div>';
-              echo '<br>';
-        }else{
-            echo "<div style='padding: 6px 12px; border: 1px solid #ccc; background-color:rgba(200,0,0, 0.4);'>
-                  <h4>Make Payement for gawn Collection !!</h4>
-                  <a href='pay.php' style='color:white;'><b>Pay Via M-PESA</b></a><br>
-                  You can now download the Gawn Collection Form";
-              echo '</div>';
-              echo '<br>';
-        }
-      ?>
+      
     </div>
 
 
@@ -155,8 +94,45 @@
 
     <div class="container" >
         <div style="padding: 6px 12px; border: 1px solid #ccc;height:auto; verflow: auto;">
-          <b>Payments  </b>
-       
+          <b>Issues from department ...... if there's any  </b>
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">id# </th>
+                <th scope="col">RegNo</th>
+                <th scope="col">Telephone</th>
+                <th scope="col">Total Balance</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- [ LOOP THE CLEARANCE STATUS OF THE STUDENTS ] -->
+            <tr>
+                <th scope="row"><?php echo $_SESSION['username'];?></th>
+                <?php
+
+                $user =$_SESSION['username'];
+                echo $user;
+                        $sql = "SELECT * FROM users WHERE username = '$user'";
+                $result = mysqli_query($db, $sql);
+                
+                while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+                    $tpayment = $row[5];
+                    $tamount =5;
+                    $bal = 5-$row[5];
+                    $dpay = number_format($bal*1000,2);
+                    $phone = $row [4];
+                    echo '<td>'.$row[1].'</td>';
+                    echo '<td>'.$phone.'</td>';
+                    echo '<td>'.$dpay.' Ksh</td>';
+                    echo '</tr>';
+                    echo '<tr>
+                            <a href="mpesa/initiate.php?id='.$phone.'&amount='.$tamount.'" target="0"><strong><button type="button" class="btn btn-primary btn-block">Make Payment</button>
+                         </tr>';
+                }
+                ?>
+            
+            </tbody>
+        </table>
         </div>
     </div>
   </section>

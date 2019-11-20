@@ -1,0 +1,3 @@
+user: africand_clearance
+pass: DkutClearance
+dbas: africand_dkut_clearance_system

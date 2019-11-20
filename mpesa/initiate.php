@@ -1,5 +1,8 @@
 <?php
-
+if (isset($_GET['id'])){
+  $phone = $_GET['id'];
+  $amount = $_GET['amount'];
+}
 error_reporting(0);
 ini_set('display_errors', 0);
 
@@ -8,7 +11,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // $obj = json_decode($_GET["phone"],$_GET["amount"],$_GET["order_no"], false);
 $od =rand(20,100);
-$phone = 0718610463;
+//$phone = 0718610463;
 $amount = '100';
 $order_no = $od;
 
@@ -18,7 +21,7 @@ mpesaPush($phone, $amount, $order_no );
 
 function mpesaPush($phone, $amount, $order_no ){
 
-$account_no = 'Smart Revenue: '.$order_no;
+$account_no = 'Dkut Clearance System: '.$order_no;
 
 $conn = mysqli_connect("localhost","africand_sr","Raven254#$","africand_smartrev");
 //$conn = mysqli_connect("localhost", "ccco_Macheda2", "h@UbMCo0JEa{", "ccco_Macheda2");
