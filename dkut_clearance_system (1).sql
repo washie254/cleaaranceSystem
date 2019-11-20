@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2019 at 10:41 PM
+-- Generation Time: Nov 20, 2019 at 01:51 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -68,7 +68,8 @@ INSERT INTO `clearance` (`id`, `student_reg`, `cod`, `librarian`, `housekeeper`,
 (1, 'C025-02-0032/2016', 'PENDING', 'CLEARED', 'CLEARED', 'CLEARED', 'CLEARED', 'CLEARED', 'PENDING'),
 (2, 'C025-02-0033/2016', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING'),
 (3, 'C026-02-0040/2016', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING'),
-(4, 'C026-02-0041/2016', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING');
+(4, 'C026-02-0041/2016', 'CLEARED', 'CLEARED', 'PENDING', 'PENDING', 'PENDING', 'PENDING', 'PENDING'),
+(5, 'C025-02-0029/2015', 'CLEARED', 'CLEARED', 'CLEARED', 'CLEARED', 'CLEARED', 'CLEARED', 'CLEARED');
 
 -- --------------------------------------------------------
 
@@ -120,6 +121,28 @@ INSERT INTO `depertment_officers` (`id`, `username`, `password`, `departmment`, 
 (5, 'SPORTS1', '6d7402ff98e7872ed7e4ab52ee7f3de8', 'sportsOfficer', '2019-08-07'),
 (6, 'REGISTRAR1', '60ab5ce589355054fb756811898f7055', 'registrar', '2019-08-07'),
 (7, 'FINANCE1', 'b11d49f3630e78c3ab484e3c311963e7', 'finance', '2019-08-20');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gawnofficer`
+--
+
+CREATE TABLE `gawnofficer` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `dateadded` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `gawnofficer`
+--
+
+INSERT INTO `gawnofficer` (`id`, `username`, `email`, `password`, `dateadded`) VALUES
+(1, 'gawn1', 'gawnofficer@gmail.com', 'b7356d05b2f8e84e6b26ad1cce31ee5b', '2019-11-16'),
+(2, 'derrik', 'derik@gmail.com', '3715208e3b9ab613355d68cf4610c223', '2019-11-16');
 
 -- --------------------------------------------------------
 
@@ -290,6 +313,39 @@ INSERT INTO `issue_sportsofficer` (`id`, `std_reg`, `category`, `description`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `mpesa`
+--
+
+CREATE TABLE `mpesa` (
+  `id` int(100) NOT NULL,
+  `resultCode` varchar(1000) NOT NULL,
+  `resultDesc` varchar(1000) NOT NULL,
+  `merchantRequestID` varchar(1000) NOT NULL,
+  `checkoutRequestID` varchar(1000) NOT NULL,
+  `amount` varchar(1000) NOT NULL,
+  `mpesaReceiptNumber` varchar(1000) NOT NULL,
+  `transactionDate` varchar(1000) NOT NULL,
+  `phoneNumber` varchar(1000) NOT NULL,
+  `state` int(10) NOT NULL DEFAULT 0,
+  `datetime` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mpesa`
+--
+
+INSERT INTO `mpesa` (`id`, `resultCode`, `resultDesc`, `merchantRequestID`, `checkoutRequestID`, `amount`, `mpesaReceiptNumber`, `transactionDate`, `phoneNumber`, `state`, `datetime`) VALUES
+(33, '0', 'The service request is processed successfully.', '21098-12894606-1', 'ws_CO_DMZ_400337515_14092019184131462', '4', 'NIE6L5OVQO', '20190914184140', '254704003701', 0, '2019-09-14 15:41:41.900599'),
+(36, '0', 'The service request is processed successfully.', '21097-12914299-1', 'ws_CO_DMZ_400339828_14092019185424523', '4', 'NIE4L67WVW', '20190914185435', '704003701', 0, '2019-09-14 15:54:37.010361'),
+(40, '0', 'The service request is processed successfully.', '21087-13163562-1', 'ws_CO_DMZ_400365300_14092019212214802', '1', 'NIE2LC2AX4', '20190914212223', '704003701', 1, '2019-09-14 18:22:24.202099'),
+(51, '0', 'The service request is processed successfully.', '21093-13257556-1', 'ws_CO_DMZ_982437677_14092019222554942', '4', 'NIE8LDG2UQ', '20190914222615', '704003701', 1, '2019-09-14 19:26:16.008046'),
+(52, '0', 'The service request is processed successfully.', '31322-6543329-1', 'ws_CO_DMZ_982905760_14092019225146769', '1', 'NIE5LDTEHB', '20190914225158', '704003701', 1, '2019-09-14 19:51:59.917162'),
+(53, '1032', '[STK_CB - ]Request cancelled by user', '31323-6613838-1', 'ws_CO_DMZ_984787433_15092019003545223', '', '', '', '', 3, '2019-09-14 21:36:24.845647'),
+(54, '1032', '[STK_CB - ]Request cancelled by user', '6644-8904475-1', 'ws_CO_DMZ_400469550_15092019144515804', '', '', '', '', 3, '2019-09-15 11:45:24.168565');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -297,18 +353,21 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `tel` varchar(15) NOT NULL,
+  `gpayment` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
-(4, 'C025-02-0032/2016', 'user4@gmail.com', '3f02ebe3d7929b091e3d8ccfde2f3bc6'),
-(5, 'C025-02-0033/2016', 'user5@gmail.com', '0a791842f52a0acfbb3a783378c066b8'),
-(6, 'C026-02-0040/2016', 'itguy@gmail.com', 'b200d9b6e538b8c6f50c1cae6c7c7094'),
-(7, 'C026-02-0041/2016', 'co26@gmail.com', '9cdca52def14f774d6ed3b385b516f45');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `tel`, `gpayment`) VALUES
+(4, 'C025-02-0032/2016', 'user4@gmail.com', '3f02ebe3d7929b091e3d8ccfde2f3bc6', '', 0),
+(5, 'C025-02-0033/2016', 'user5@gmail.com', '0a791842f52a0acfbb3a783378c066b8', '', 0),
+(6, 'C026-02-0040/2016', 'itguy@gmail.com', 'b200d9b6e538b8c6f50c1cae6c7c7094', '', 0),
+(7, 'C026-02-0041/2016', 'co26@gmail.com', '9cdca52def14f774d6ed3b385b516f45', '', 0),
+(8, 'C025-02-0029/2015', 'user6@gmail.com', 'affec3b64cf90492377a8114c86fc093', '0718610463', 0);
 
 --
 -- Indexes for dumped tables
@@ -336,6 +395,12 @@ ALTER TABLE `departments`
 -- Indexes for table `depertment_officers`
 --
 ALTER TABLE `depertment_officers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `gawnofficer`
+--
+ALTER TABLE `gawnofficer`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -387,6 +452,12 @@ ALTER TABLE `issue_sportsofficer`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `mpesa`
+--
+ALTER TABLE `mpesa`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -406,7 +477,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `clearance`
 --
 ALTER TABLE `clearance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -419,6 +490,12 @@ ALTER TABLE `departments`
 --
 ALTER TABLE `depertment_officers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `gawnofficer`
+--
+ALTER TABLE `gawnofficer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `issues`
@@ -469,10 +546,16 @@ ALTER TABLE `issue_sportsofficer`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `mpesa`
+--
+ALTER TABLE `mpesa`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
